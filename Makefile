@@ -8,6 +8,8 @@ mpc_63_88_deck:
 				system("cp white_standard.svg temp.svg");\
 			}\
 			for(i=1;i<=NF;i++) {\
+				gsub(/"/,"\\\"",$$i);\
+				#print "xmlstarlet ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v \"" $$i "\" temp.svg > temp_pipe.svg";\
 				system("xmlstarlet ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v \"" $$i "\" temp.svg > temp_pipe.svg");\
 				system("cat temp_pipe.svg > temp.svg");\
 				system("rm temp_pipe.svg");\
