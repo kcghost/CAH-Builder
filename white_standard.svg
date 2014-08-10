@@ -14,7 +14,7 @@
    id="svg3860"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="edge_card_white.svg">
+   sodipodi:docname="test.svg">
   <defs
      id="defs3862">
     <clipPath
@@ -42,8 +42,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="144.0475"
-     inkscape:cy="154.0242"
+     inkscape:cx="145.47608"
+     inkscape:cy="165.97734"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -64,7 +64,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -137,52 +137,16 @@
          id="path3452-9"
          inkscape:connector-curvature="0" />
     </g>
-    <text
+    <flowRoot
        xml:space="preserve"
-       style="font-size:18.00070763000000085px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#231f20;fill-opacity:1;stroke:none;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L Bold"
-       x="24.55114"
-       y="757.28601"
-       id="text5026"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         x="24.55114"
-         y="757.28601"
-         id="Line1"></tspan><tspan
-         sodipodi:role="line"
-         x="24.55114"
-         y="779.78687"
-         id="Line2"></tspan><tspan
-         sodipodi:role="line"
-         x="24.55114"
-         y="802.28778"
-         id="Line3"></tspan><tspan
-         sodipodi:role="line"
-         x="24.55114"
-         y="824.78864"
-         id="Line4"></tspan><tspan
-         sodipodi:role="line"
-         x="24.55114"
-         y="847.28955"
-         id="Line5"></tspan><tspan
-         sodipodi:role="line"
-         x="24.55114"
-         y="869.79041"
-         id="Line6"></tspan><tspan
-         sodipodi:role="line"
-         x="24.55114"
-         y="892.29132"
-         id="Line7"></tspan><tspan
-         sodipodi:role="line"
-         x="24.55114"
-         y="914.79218"
-         id="Line8"></tspan><tspan
-         sodipodi:role="line"
-         x="24.55114"
-         y="937.29309"
-         id="Line9"></tspan><tspan
-         sodipodi:role="line"
-         x="24.55114"
-         y="959.79395"
-         id="Line10"></tspan></text>
-  </g>
+       id="textArea"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L Bold"
+       transform="translate(-1.5113504,718.89956)"><flowRegion
+         id="flowRegion3004"><rect
+           id="rect3006"
+           width="195"
+           height="250"
+           x="26.071428"
+           y="20.857143"
+           style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L Bold" /></flowRegion></flowRoot>  </g>
 </svg>
