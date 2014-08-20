@@ -29,6 +29,18 @@ mpc_63_88_deck:
 			}\
 \
 			for(i=1;i<=NF;i++) {\
+				#replace quotes with commas\
+				#lengthen underscores\
+				str = $$i;\
+				while(match(str,/\\_/)) {\
+					tmp_str = str;\
+					sub(/\\/,"",tmp_str);\
+					cmd = "gs -dQUIET -sDEVICE=nullpage 2>/dev/null - <<<\x27/NimbusSanL-Bold findfont 18 scalefont setfont (" tmp_str ") stringwidth pop 90 div ==\x27";\
+					cmd | getline inches;\
+					print inches;\
+					str = substr(str,RSTART+RLENGTH);\
+				}\
+\
 				gsub(/"/,"\\\"",$$i);\
 				print "xmlstarlet ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v \"" $$i "\" temp.svg > temp_pipe.svg";\
 				#system("xmlstarlet ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v \"" $$i "\" temp.svg > temp_pipe.svg");\
