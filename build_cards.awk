@@ -1,16 +1,35 @@
 function run(cmd) {
 	if(debug) {
 		print cmd;
-	} else {
+	} 
+	if(exec) {
 		system(cmd);
 	}
 }
 
+function get_run(cmd) {
+	if(debug) {
+		print cmd;
+	} 
+	if(exec) {
+		cmd | getline tmp;
+		fflush();
+		if(debug) {
+			print tmp;
+		}
+	}
+
+	return tmp;
+}
+
 {
-	#debug = "true";
+	debug = "true";
+	exec = "true";
 
 	underscore_width = 0.111197919;
-	line_max_width = 2.16666666667;
+	max_line_width = 2.16666666667;
+	min_underscores = 10;
+	max_underscores = 18;
 
 	quotes_strip = $$0;
 	gsub(/"[^"]*"/,"",quotes_strip);
@@ -40,37 +59,51 @@ function run(cmd) {
 
 		#lengthen underscores. Look for \_: The best thing since \_.
 		#must lengthen the underscore until the character after it (usually a period or a colon) is the last character on the line
-		str = $$i;
-		build_str = "";
+		str = $i;
+		#replace special underscores one by one until they are gone
 		while(match(str,/\\_./)) {
-			match_rstart = RSTART;
-			match_rlength = RLENGTH;
+			#text up to and including underscore plus the character after it
+			match(str,/([^\\]*)\\_(.)/,cap);
+			next_char = cap[2];
+			tmp_str = cap[1] _ next_char;
 
-			tmp_str = str;
-			match(str,/\_(.)/,cap);
-			sub(/\_.(.*)/,"_" cap[1],tmp_str);
-			sub(/\\/,"",tmp_str);
+			print tmp_str;
+			if(next_char != " ") {
+				line = "";
+				char_index = 1;
+				#iterate words, predict line wraps
+				while(match(substr(tmp_str,char_index),/([^ ]*)([ ]|$)/,cap)) {
+					if(RLENGTH == 0) {
+						break;
+					}
+					#evaluate line_width without ending space
+					line_width = get_run("echo \x27/NimbusSanL-Bold findfont 18 scalefont setfont ("\
+				 		line cap[1] ") stringwidth pop 90 div ==\x27 | gs -dQUIET -sDEVICE=nullpage 2>/dev/null - ");
+					if(line_width > max_line_width) {
+						#start a new line
+						print line;
+						line = cap[0];
+					} else {
+						line = line cap[0];
+					}
 
-			cmd = "echo \x27/NimbusSanL-Bold findfont 18 scalefont setfont (" tmp_str ") stringwidth pop 90 div ==\x27 | gs -dQUIET -sDEVICE=nullpage 2>/dev/null - ";
-			#print cmd;
-			cmd | getline line_width;
-			#print line_width;
-
-			underscores = int((line_max_width - (line_width % line_max_width) + underscore_width) / underscore_width);
-			#print underscores;
+					char_index = char_index + RLENGTH;
+				}
+				#line is now the last line with the underscore, and line_width is the width of that line
+				print line;
+				underscores = int((max_line_width - (line_width % max_line_width) + underscore_width) / underscore_width);
+				if(underscores < min_underscores) {
+					#take up whole line
+					underscores = max_underscores;
+				}
+			} else {
+				underscores = min_underscores;;
+			}
+			print underscores;
 			under_str =  gensub(/ /, "_", "g", sprintf("%*s", underscores, ""));
+			print under_str;
+			sub(/\\_/,under_str,str);
 
-			tmp_str = str;
-			sub(/\_/,under_str,tmp_str);
-			sub(/\\/,"",tmp_str);
-			match(tmp_str,/[^_]*_+./,cap);
-			#print cap[0];
-			build_str = build_str cap[0];
-
-			str = substr(str,match_rstart+match_rlength);
-		}
-		if(length(build_str) > 0) {
-			str = build_str str;
 		}
 
 		gsub(/"/,"\\\"",str);
