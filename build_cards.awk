@@ -12,8 +12,8 @@ function get_run(cmd) {
 		print cmd;
 	} 
 	if(exec) {
-		cmd | getline tmp;
-		fflush();
+		while ( (cmd | getline tmp) > 0) { }
+		close(cmd); 
 		if(debug) {
 			print tmp;
 		}
@@ -28,7 +28,7 @@ function get_run(cmd) {
 
 	underscore_width = 0.111197919;
 	max_line_width = 2.16666666667;
-	min_underscores = 10;
+	min_underscores = 6;
 	max_underscores = 18;
 
 	quotes_strip = $$0;
@@ -63,49 +63,61 @@ function get_run(cmd) {
 		#replace special underscores one by one until they are gone
 		while(match(str,/\\_./)) {
 			#text up to and including underscore plus the character after it
-			match(str,/([^\\]*)\\_(.)/,cap);
+			#BUG, not supporting standalone backslashes
+			match(str,/(.*?)\\_(.)(.*)/,cap);
 			next_char = cap[2];
-			tmp_str = cap[1] _ next_char;
+			tmp_str = cap[1] "_" next_char;
+			rest = cap[3];
 
+			line = "";
+			char_index = 1;
 			print tmp_str;
-			if(next_char != " ") {
-				line = "";
-				char_index = 1;
-				#iterate words, predict line wraps
-				while(match(substr(tmp_str,char_index),/([^ ]*)([ ]|$)/,cap)) {
-					if(RLENGTH == 0) {
-						break;
-					}
-					#evaluate line_width without ending space
-					line_width = get_run("echo \x27/NimbusSanL-Bold findfont 18 scalefont setfont ("\
-				 		line cap[1] ") stringwidth pop 90 div ==\x27 | gs -dQUIET -sDEVICE=nullpage 2>/dev/null - ");
-					if(line_width > max_line_width) {
-						#start a new line
-						print line;
-						line = cap[0];
-					} else {
-						line = line cap[0];
-					}
+			#iterate words, predict line wraps
+			while(match(substr(tmp_str,char_index),/([^ ]*)([ ]|$)/,cap)) {
+				if(RLENGTH == 0) {
+					print line;
+					break;
+				}
+				#evaluate line_width without ending space
+				#escape stuff for command line
+				arg_str = line cap[1];
+				gsub(/"/,"\\\"",arg_str);
+				gsub(/\\/,"\\\\\\\\\\",arg_str);
 
-					char_index = char_index + RLENGTH;
+				line_width = get_run("echo \"/NimbusSanL-Bold findfont 18 scalefont setfont ("\
+			 		arg_str ") stringwidth pop 90 div ==\" | gs -dQUIET -sDEVICE=nullpage 2>/dev/null - ");
+				if(line_width > max_line_width) {
+					#start a new line
+					print line;
+					line = cap[0];
+				} else {
+					line = line cap[0];
 				}
-				#line is now the last line with the underscore, and line_width is the width of that line
-				print line;
-				underscores = int((max_line_width - (line_width % max_line_width) + underscore_width) / underscore_width);
-				if(underscores < min_underscores) {
-					#take up whole line
-					underscores = max_underscores;
-				}
-			} else {
-				underscores = min_underscores;;
+
+				char_index = char_index + RLENGTH;
 			}
-			print underscores;
-			under_str =  gensub(/ /, "_", "g", sprintf("%*s", underscores, ""));
-			print under_str;
-			sub(/\\_/,under_str,str);
+			#line is now the last line with the underscore,
+			#escape stuff for command line
+			arg_str = line;
+			gsub(/"/,"\\\"",arg_str);
+			gsub(/\\/,"\\\\\\\\\\",arg_str);
 
+			line_width = get_run("echo \"/NimbusSanL-Bold findfont 18 scalefont setfont ("\
+		 		arg_str ") stringwidth pop 90 div ==\" | gs -dQUIET -sDEVICE=nullpage 2>/dev/null - ");
+
+			print line_width;
+			underscores = int((max_line_width - line_width + underscore_width) / underscore_width);
+			print underscores;
+			if(underscores < min_underscores) {
+				#take up whole line
+				underscores = max_underscores;
+			}
+
+			under_str =  gensub(/ /, "_", "g", sprintf("%*s", underscores, ""));
+			sub(/\\_/,under_str,str);
 		}
 
+		#escape quotes for command line
 		gsub(/"/,"\\\"",str);
 		run("xmlstarlet ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v \"" str "\" temp.svg > temp_pipe.svg");
 		run("cat temp_pipe.svg > temp.svg");
