@@ -23,13 +23,14 @@ function get_run(cmd) {
 }
 
 {
-	debug = "true";
+	#debug = "true";
 	exec = "true";
+	preview = "true";
 
 	underscore_width = 0.111197919;
 	max_line_width = 2.16666666667;
-	min_underscores = 6;
-	max_underscores = 18;
+	min_underscores = 10;
+	max_underscores = 19;
 
 	quotes_strip = $$0;
 	gsub(/"[^"]*"/,"",quotes_strip);
@@ -60,68 +61,84 @@ function get_run(cmd) {
 		#lengthen underscores. Look for \_: The best thing since \_.
 		#must lengthen the underscore until the character after it (usually a period or a colon) is the last character on the line
 		str = $i;
-		#replace special underscores one by one until they are gone
-		while(match(str,/\\_./)) {
-			#text up to and including underscore plus the character after it
-			match(str,/(.*?)\\_(.)(.*)/,cap);
-			next_char = cap[2];
-			tmp_str = cap[1] "_" next_char;
-			rest = cap[3];
 
-			line = "";
-			char_index = 1;
-			print tmp_str;
-			#iterate words, predict line wraps
-			while(match(substr(tmp_str,char_index),/([^ ]*)([ ]|$)/,cap)) {
-				if(RLENGTH == 0) {
-					print line;
-					break;
-				}
-				#evaluate line_width without ending space
-				#escape stuff for command line
-				arg_str = line cap[1];
-				gsub(/"/,"\\\"",arg_str);
-				gsub(/\\/,"\\\\\\\\\\",arg_str);
+		if(preview) {
+			print str;
+		}
+		line = "";
+		char_index = 1;
+		#iterate words, predict line wraps
+		while(char_index < length(str)) {
+			match(substr(str,char_index),/([^ ]*)([ ]|$)+/,cap);
+			progress = RLENGTH;
+			char_index = char_index + progress;
 
-				line_width = get_run("echo \"/NimbusSanL-Bold findfont 18 scalefont setfont ("\
-			 		arg_str ") stringwidth pop 90 div ==\" | gs -dQUIET -sDEVICE=nullpage 2>/dev/null - ");
-				if(line_width > max_line_width) {
-					#start a new line
-					print line;
-					line = cap[0];
-				} else {
-					line = line cap[0];
-				}
+			word = cap[1];
+			brk = cap[2];
 
-				char_index = char_index + RLENGTH;
-			}
-			#line is now the last line with the underscore,
-			#escape stuff for command line
-			arg_str = line;
+			#evaluate line_width without ending space
+			#escape stuff for command line, eval dynamic underscore as a single underscore
+			arg_str = line word;
+			gsub(/\\_/,"_",arg_str);
 			gsub(/"/,"\\\"",arg_str);
 			gsub(/\\/,"\\\\\\\\\\",arg_str);
 
 			line_width = get_run("echo \"/NimbusSanL-Bold findfont 18 scalefont setfont ("\
 		 		arg_str ") stringwidth pop 90 div ==\" | gs -dQUIET -sDEVICE=nullpage 2>/dev/null - ");
 
-			print line_width;
-			underscores = int((max_line_width - line_width + underscore_width) / underscore_width);
-			print underscores;
-			if(underscores < min_underscores) {
-				#take up whole line
-				underscores = max_underscores;
-			}
+			#handle dynamic underscores in word
+			if(match(word,/\\_/)) {
+				#extend word to end of line
+				underscores = int((max_line_width - line_width + underscore_width) / underscore_width);
+				if(underscores < min_underscores) {
+					#word needs to take up whole line
+					#force line to wrap and try again with no progress
+					if(preview) {
+						print line;
+					}
+					line = "";
+					char_index = char_index - progress;
+					continue;
+				}
+				under_str =  gensub(/ /, "_", "g", sprintf("%*s", underscores, ""));
 
-			under_str =  gensub(/ /, "_", "g", sprintf("%*s", underscores, ""));
-			sub(/\\_/,under_str,str);
+				sub(/\\_/,under_str,str);
+				sub(/\\_/,under_str,word);
+
+				char_index = char_index + underscores - 2;
+
+				if(preview) {
+					line = line word;
+					print line;
+				}
+				#start a new line
+				line = "";
+			} else {
+				if(line_width > max_line_width) {
+					#start a new line
+					if(preview) {
+						print line;
+					}
+					line = word brk;
+				} else {
+					line = line word brk;
+					#if last line
+				}
+				if(preview && char_index >= length(str)) {
+					print line;
+				}
+			}
+		}
+		if(preview) {
+			print "";
 		}
 
 		#escape quotes for command line
 		gsub(/"/,"\\\"",str);
-		run("xmlstarlet ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v \"" str "\" temp.svg > temp_pipe.svg");
+		run("xmlstarlet -q ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v \"" str "\" temp.svg 2>/dev/null > temp_pipe.svg");
 		run("cat temp_pipe.svg > temp.svg");
 		run("rm temp_pipe.svg");
 	}
-	run("inkscape -z -b white -d 1200 -e out/" NR ".png temp.svg");
+	run("inkscape -z -b white -d 1200 -e out/" NR ".png temp.svg > /dev/null");
 	run("rm temp.svg");
 }
