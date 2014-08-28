@@ -63,7 +63,6 @@ function get_run(cmd) {
 		#replace special underscores one by one until they are gone
 		while(match(str,/\\_./)) {
 			#text up to and including underscore plus the character after it
-			#BUG, not supporting standalone backslashes
 			match(str,/(.*?)\\_(.)(.*)/,cap);
 			next_char = cap[2];
 			tmp_str = cap[1] "_" next_char;
