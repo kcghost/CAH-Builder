@@ -30,7 +30,6 @@ function get_run(cmd) {
 	underscore_width = 0.111197919;
 	max_line_width = 2.16666666667;
 	min_underscores = 10;
-	max_underscores = 19;
 
 	quotes_strip = $$0;
 	gsub(/"[^"]*"/,"",quotes_strip);
@@ -69,6 +68,7 @@ function get_run(cmd) {
 		char_index = 1;
 		#iterate words, predict line wraps
 		while(char_index < length(str)) {
+			#TODO: not handling '-' breaks for preview
 			match(substr(str,char_index),/([^ ]*)([ ]|$)+/,cap);
 			progress = RLENGTH;
 			char_index = char_index + progress;
