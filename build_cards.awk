@@ -55,12 +55,13 @@ function get_run(cmd) {
 	}
 
 	for(i=1;i<=NF;i++) {
-		#replace quotes with commas? Helvetica-ify?
-
-		#lengthen underscores. Look for \_: The best thing since \_.
-		#must lengthen the underscore until the character after it (usually a period or a colon) is the last character on the line
 		str = $i;
+		#Make all quotes and apostrophes curly
+		gsub(/'/,"’",str);
+		str = gensub(/"([^"]*)"/,"“\\1”","g",str);
 
+		#lengthen single underscores.
+		#must lengthen the underscore until the character after it (usually a period or a colon) is the last character on the line
 		if(preview) {
 			print str;
 		}
@@ -79,7 +80,6 @@ function get_run(cmd) {
 			#evaluate line_width without ending space
 			#escape stuff for command line, eval dynamic underscore as a single underscore
 			arg_str = line word;
-			gsub(/\\_/,"_",arg_str);
 			gsub(/"/,"\\\"",arg_str);
 			gsub(/\\/,"\\\\\\\\\\",arg_str);
 
@@ -87,7 +87,7 @@ function get_run(cmd) {
 		 		arg_str ") stringwidth pop 90 div ==\" | gs -dQUIET -sDEVICE=nullpage 2>/dev/null - ");
 
 			#handle dynamic underscores in word
-			if(match(word,/\\_/)) {
+			if(match(word,/([^_]|^)_([^_]|$)/)) {
 				#extend word to end of line
 				underscores = int((max_line_width - line_width + underscore_width) / underscore_width);
 				if(underscores < min_underscores) {
@@ -102,10 +102,10 @@ function get_run(cmd) {
 				}
 				under_str =  gensub(/ /, "_", "g", sprintf("%*s", underscores, ""));
 
-				sub(/\\_/,under_str,str);
-				sub(/\\_/,under_str,word);
+				str = gensub(/([^_]|^)_([^_]|$)/,"\\1" under_str "\\2",1,str);
+				word = gensub(/([^_]|^)_([^_]|$)/,"\\1" under_str "\\2",1,word);
 
-				char_index = char_index + underscores - 2;
+				char_index = char_index + underscores - 1;
 
 				if(preview) {
 					line = line word;
@@ -140,5 +140,5 @@ function get_run(cmd) {
 		run("rm temp_pipe.svg");
 	}
 	run("inkscape -z -b white -d 1200 -e out/" NR ".png temp.svg > /dev/null");
-	run("rm temp.svg");
+	#run("rm temp.svg");
 }
