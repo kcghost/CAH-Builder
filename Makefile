@@ -14,7 +14,10 @@ out_svg: pre_list
 
 pre_list: list
 	@echo "Preprocessing list..."
-	@gawk -v preview="true" -v out_file="pre_list" -F '\\\\n' -f preprocess.awk list
+	@gawk -v preview="true" -v out_file="pre_list" -f preprocess.awk list > wrap_list
+
+list: pdf_list
+	@gawk -f unwrap.awk pdf_list > list
 
 clean:
 	@rm -fR out_png

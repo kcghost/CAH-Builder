@@ -1,5 +1,12 @@
 @include "util.awk"
-
+BEGIN {
+	RS = "\n"; 
+	FS= "\\\\n";
+	ORS = "\n";
+}
+NR != 1 && preview {
+	print "";
+}
 {
 	#defaults
 	if(!out_file) {
@@ -19,6 +26,8 @@
 	max_line_width = 2.16666666667;
 	min_underscores = 10;
 
+	total_str;
+
 	for(i=1;i<=NF;i++) {
 		str = $i;
 		#Make all quotes and apostrophes curly
@@ -27,9 +36,6 @@
 
 		#lengthen single underscores.
 		#must lengthen the underscore until the character after it (usually a period or a colon) is the last character on the line
-		if(preview) {
-			print str;
-		}
 		line = "";
 		char_index = 1;
 		#iterate words, predict line wraps
@@ -94,10 +100,16 @@
 				}
 			}
 		}
-		if(preview) {
-			print "";
+
+		if(preview && str == "") {
+			print "\\n";
 		}
 
-		print str >out_file;
+		if(i == 1) {
+			total_str = str;
+		} else {
+			total_str = total_str "\\n" str;
+		}
 	}
+	print total_str >out_file;
 }
