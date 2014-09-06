@@ -69,4 +69,4 @@ The files under [media](media/) are derived from [Cards Against Humanity LLC](ht
 
 Everything else is covered under [GPLv3 (or any later version)](http://www.gnu.org/licenses/gpl.html).
 
-Details in [License](License.md).
+Details in [License](LICENSE.md).
