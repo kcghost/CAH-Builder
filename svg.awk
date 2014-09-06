@@ -1,3 +1,20 @@
+# Copyright (C) 2014 Casey Fitzpatrick
+
+# This file is part of CAH Builder.
+# 
+# CAH Builder is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# CAH Builder is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with CAH Builder.  If not, see <http://www.gnu.org/licenses/>.
+
 @include "util.awk"
 BEGIN {
 	FS= "\\\\n";
@@ -40,14 +57,14 @@ BEGIN {
 
 		#print count;
 		if(count == 2) {
-			run("cp black_pick2.svg temp.svg");
+			run("cp media/black_pick2.svg temp.svg");
 		} else if(count == 3) {
-			run("cp black_pick3.svg temp.svg");
+			run("cp media/black_pick3.svg temp.svg");
 		} else {
-			run("cp black_standard.svg temp.svg");
+			run("cp media/black_standard.svg temp.svg");
 		}
 	} else {
-		run("cp white_standard.svg temp.svg");
+		run("cp media/white_standard.svg temp.svg");
 	}
 
 	for(i=1;i<=NF;i++) {

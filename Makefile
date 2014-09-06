@@ -1,3 +1,20 @@
+# Copyright (C) 2014 Casey Fitzpatrick
+
+# This file is part of CAH Builder.
+# 
+# CAH Builder is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# CAH Builder is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with CAH Builder.  If not, see <http://www.gnu.org/licenses/>.
+
 out_png: out_svg
 	@echo "Creating PNG files..."
 	@mkdir -p out_png
@@ -14,13 +31,13 @@ out_svg: pre_list
 
 #creates pre_list by doing magical things with single underscores and quotes and things
 #also creates a file wrap_list that is a text preview in the wrapped (pdf_list) format. Not needed for the images.
-pre_list: list
+pre_list: media/list
 	@echo "Preprocessing list..."
-	@gawk -v preview="true" -v out_file="pre_list" -f preprocess.awk list > wrap_list
+	@gawk -v preview="true" -v out_file="pre_list" -f preprocess.awk media/list > wrap_list
 
 #wrapped format should not be used normally. list contains more useful information (forced newlines) than pdf_list
-unwrap: pdf_list
-	@gawk -f unwrap.awk pdf_list > list
+unwrap: media/pdf_list
+	@gawk -f unwrap.awk media/pdf_list > media/list
 
 clean:
 	@rm -fR out_png
