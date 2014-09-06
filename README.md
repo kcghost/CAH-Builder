@@ -5,7 +5,7 @@ The resulting images ~~will~~ should work at [Make Playing Cards](http://www.mak
 
 Licensing
 ---------
-The following files (under 'media') use graphics and text from CAH_MainGame.pdf distributed by [Cards Against Humanity LLC](http://cardsagainsthumanity.com/).
+The following files (under 'media') use graphics and text from [CAH_MainGame.pdf](http://s3.amazonaws.com/cah/CAH_MainGame.pdf) distributed by [Cards Against Humanity LLC](http://cardsagainsthumanity.com/).
 They are covered under the [Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic](http://creativecommons.org/licenses/by-nc-sa/2.0/) License.
 
 * pdf_list
