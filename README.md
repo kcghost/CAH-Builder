@@ -32,10 +32,10 @@ Usage
 Edit the [media/list](media/list) file with your favorite text editor. 
 
 The format of the file is one line per card. Lines will normally wrap automatically, but you can force a newline using `\n`.
-A single underscore character `_` will be extended to the end of the line in most cases (See [Underscore Rules](#under)).
+A single underscore character `_` will be extended to the end of the line in most cases (See [Underscore Rules](#underscore-rules)).
 Apostrophes and quotes will automatically be turned into curly versions: `'` will turn into `’` and `"foo"` will turn into `“foo”`.
 
-Don't worry about white vs. black cards, or if it is a Pick 2 or a Pick 3, etc. All of that is automagically determined (See [Grammar Rules](#grammar)).
+Don't worry about white vs. black cards, or if it is a Pick 2 or a Pick 3, etc. All of that is automagically determined (See [Grammar Rules](#grammar-rules)).
 
 When you are satisfied with your list, run:
 ```
@@ -45,7 +45,6 @@ make
 1200 DPI PNG images will be created under out_png. The SVG files will be available under out_svg.
 The preprocessed list is available as pre_list. A wrapped text preview is available as wrap_list.
 
-<a name="#under"></a>
 Underscore Rules
 ----------------
 Subject to change. The current rules do not exactly match those used for actual cards. They mostly do.
@@ -56,7 +55,6 @@ If the underscore is part of a word, such as `_-tastic!` or includes punctuation
 
 You can specify any underscore length you want (besides 1) by using multiple underscores.
 
-<a name="#grammar"></a>
 Grammar Rules
 -------------
 As far as CAH Builder is concerned, if it is not a black card, it is a white one. But you may want to look at the [list](media/list) and follow the general pattern.
