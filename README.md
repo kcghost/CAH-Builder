@@ -62,3 +62,11 @@ The white cards are most often physical things or abstract ideas, not commands o
 Every guideline I just mentioned has an exception however, most notably `Bees?` and `YOU MUST CONSTRUCT ADDITIONAL PYLONS.`
 
 The black cards are determined in three separate ways. One, if the text is a question. Questions contain at least one [interrogative word](http://www.hopstudios.com/nep/unvarnished/item/list_of_english_question_words) and end with a `?`. Two, if it contains one or more blanks, which are each one or more consecutive underscores. The number of blanks determines Standard vs. Pick 2 vs Pick 3. Three, if it contains the word `haiku`, it's a black Pick 3 card and that's that.
+
+Licensing
+---------
+The files under [media](media/) are derived from [Cards Against Humanity LLC](http://cardsagainsthumanity.com/) material and are covered under the [CC BY-NC-SA 2.0](http://creativecommons.org/licenses/by-nc-sa/2.0/) license.
+
+Everything else is covered under [GPLv3 (or any later version)](http://www.gnu.org/licenses/gpl.html).
+
+Details in [License](License.md).
