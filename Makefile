@@ -28,6 +28,8 @@ out_svg: pre_list
 	@echo "Creating SVG files..."
 	@mkdir -p out_svg
 	@gawk -v out_dir="out_svg" -f svg.awk pre_list
+	@cp media/white_back.svg out_svg/
+	@cp media/black_back.svg out_svg/
 
 #creates pre_list by doing magical things with single underscores and quotes and things
 #also creates a file wrap_list that is a text preview in the wrapped (pdf_list) format. Not needed for the images.

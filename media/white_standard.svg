@@ -14,7 +14,7 @@
    id="svg3860"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="test.svg">
+   sodipodi:docname="white_standard.svg">
   <defs
      id="defs3862">
     <clipPath
@@ -41,9 +41,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="145.47608"
-     inkscape:cy="165.97734"
+     inkscape:zoom="1.4"
+     inkscape:cx="103.10027"
+     inkscape:cy="149.08527"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -75,7 +75,7 @@
      transform="translate(0,-719.36199)">
     <g
        id="g3014-3"
-       transform="matrix(1.250072,0,0,-1.250072,-14.999271,1805.4036)">
+       transform="matrix(1.250072,0,0,-1.250072,-4.3693499,1794.7737)">
       <g
          id="g3016-5"
          clip-path="url(#clipPath3018-3)">
@@ -92,7 +92,7 @@
     </g>
     <g
        id="g3434-1"
-       transform="matrix(1.250072,0,0,-1.250072,40.60706,1021.8122)">
+       transform="matrix(1.250072,0,0,-1.250072,51.236981,1011.1823)">
       <path
          d="M 0,0 -9.542,-2.917 -12.459,6.625 -2.917,9.542 0,0 z"
          style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
@@ -101,7 +101,7 @@
     </g>
     <g
        id="g3438-3"
-       transform="matrix(1.250072,0,0,-1.250072,28.557116,1025.6879)"
+       transform="matrix(1.250072,0,0,-1.250072,39.187037,1015.058)"
        style="fill:#231f20;fill-opacity:1">
       <path
          d="M 0,0 -3.003,9.823 6.819,12.826 9.823,3.003 0,0 z M -2.637,9.628 0.195,0.366 9.456,3.198 6.625,12.459 -2.637,9.628 z"
@@ -110,18 +110,18 @@
          inkscape:connector-curvature="0" />
     </g>
     <path
-       d="m 43.660366,1024.1773 -12.473218,0 0,-12.4732 12.473218,0 0,12.4732 z"
+       d="m 54.290287,1013.5474 -12.473218,0 0,-12.4732 12.473218,0 0,12.4732 z"
        style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="path3442-3"
        inkscape:connector-curvature="0" />
     <path
-       d="m 43.844126,1024.3598 -12.839489,0 0,-12.8394 12.839489,0 0,12.8394 z m -12.473218,-0.3662 12.105697,0 0,-12.107 -12.105697,0 0,12.107 z"
+       d="m 54.474047,1013.7299 -12.839489,0 0,-12.8394 12.839489,0 0,12.8394 z m -12.473218,-0.3662 12.105697,0 0,-12.107 -12.105697,0 0,12.107 z"
        style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="path3444-4"
        inkscape:connector-curvature="0" />
     <g
        id="g3446-2"
-       transform="matrix(1.250072,0,0,-1.250072,45.966618,1027.3298)">
+       transform="matrix(1.250072,0,0,-1.250072,56.596539,1016.6999)">
       <path
          d="M 0,0 -9.542,2.917 -6.625,12.459 2.917,9.542 0,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
@@ -130,7 +130,7 @@
     </g>
     <g
        id="g3450-3"
-       transform="matrix(1.250072,0,0,-1.250072,46.088375,1027.5588)">
+       transform="matrix(1.250072,0,0,-1.250072,56.718296,1016.9289)">
       <path
          d="M 0,0 -9.823,3.003 -6.82,12.826 3.003,9.823 0,0 z m -9.456,3.198 9.261,-2.832 2.832,9.262 -9.262,2.831 -2.831,-9.261 z"
          style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
@@ -140,13 +140,13 @@
     <flowRoot
        xml:space="preserve"
        id="textArea"
-       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L Bold"
-       transform="translate(-1.5113504,718.89956)"><flowRegion
-         id="flowRegion3004"><rect
-           id="rect3006"
-           width="195"
-           height="250"
-           x="26.071428"
-           y="20.857143"
-           style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L Bold" /></flowRegion></flowRoot>  </g>
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#231f20;fill-opacity:1;stroke:none;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L Bold"
+       transform="translate(9.1185709,730.23814)"><flowRegion
+   id="flowRegion3004"><rect
+     id="rect3006"
+     width="174.39761"
+     height="242.71881"
+     x="26.071428"
+     y="20.857143"
+     style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L Bold;fill:#231f20;fill-opacity:1" /></flowRegion></flowRoot>  </g>
 </svg>
