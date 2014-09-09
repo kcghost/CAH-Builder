@@ -63,8 +63,6 @@ NR != 1 && preview {
 	max_line_width = 1.920;
 	min_underscores = 10;
 
-	debug = "tru";
-
 	total_str = "";
 
 	for(i=1;i<=NF;i++) {
@@ -116,7 +114,7 @@ NR != 1 && preview {
 					underscores = underscores + 1;
 				}
 				underscores = int(underscores);
-				print ((max_line_width - line_width) / underscore_width);
+				#print ((max_line_width - line_width) / underscore_width);
 
 				under_str =  gensub(/ /, "_", "g", sprintf("%*s", underscores + min_underscores, ""));
 				str = gensub(/([^_]|^)_([^_]|$)/,"\\1" under_str "\\2",1,str);
