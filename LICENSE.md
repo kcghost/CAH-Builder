@@ -1,5 +1,5 @@
 The following files (under [media](media/)) use graphics and text from [CAH_MainGame.pdf](http://s3.amazonaws.com/cah/CAH_MainGame.pdf) distributed by [Cards Against Humanity LLC](http://cardsagainsthumanity.com/).
-They are covered under the [Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic](http://creativecommons.org/licenses/by-nc-sa/2.0/) License.
+They are covered under the [Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic](http://creativecommons.org/licenses/by-nc-sa/2.0/) license.
 
 * [pdf_list](media/pdf_list)
 * [list](media/list)
@@ -7,6 +7,11 @@ They are covered under the [Creative Commons Attribution-NonCommercial-ShareAlik
 * [black_pick3.svg](media/black_pick3.svg)
 * [black_standard.svg](media/black_standard.svg)
 * [white_standard.svg](media/white_standard.svg)
+
+The following files (under [media](media/)) are based on [Cards Against Humanity](http://cardsagainsthumanity.com/) cards and are also covered under the above mentioned license:
+
+* [black_back.svg](media/black_standard.svg)
+* [white_back.svg](media/white_standard.svg)
 
 All other files are licensed under the terms of the [GPLv3 (or any later version)](http://www.gnu.org/licenses/gpl.html).
 A copy of the GPLv3 is provided in the file called [COPYING](COPYING).

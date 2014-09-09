@@ -19,12 +19,11 @@ You will need the following softwares to run CAH Builder:
 * gawk
 * inkscape
 * xmlstarlet
-* ghostscript
 * 'Nimbus Sans L Bold' font (very close to the Helvetica font used on the actual cards)
 
 On Ubuntu just run:
 ```
-sudo apt-get install make gawk xmlstarlet ghostscript
+sudo apt-get install make gawk xmlstarlet inkscape
 ```
 
 Usage
