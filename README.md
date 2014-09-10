@@ -8,8 +8,7 @@ Project Status
 This project is still a work in progress. The following issues are yet to be addressed:
 
 * The card images have not yet been tested at [Make Playing Cards](http://www.makeplayingcards.com/).
-* The 'back' image is not yet included.
-* The generated images may not match the cards in the Base game in all cases (need changes to whitespace length determination, forced newlines)
+* The generated card images may not match the cards from CAH in all cases (need changes to whitespace length determination, forced newlines)
 
 Requirements
 ------------
@@ -19,7 +18,7 @@ You will need the following softwares to run CAH Builder:
 * gawk
 * inkscape
 * xmlstarlet
-* 'Nimbus Sans L Bold' font (very close to the Helvetica font used on the actual cards)
+* 'Nimbus Sans L Bold' font (very close to the Helvetica font used on the CAH cards)
 
 On Ubuntu just run:
 ```
