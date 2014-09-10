@@ -15,24 +15,20 @@
 # You should have received a copy of the GNU General Public License
 # along with CAH Builder.  If not, see <http://www.gnu.org/licenses/>.
 
-$(wildcard out_png/*.png): $(wildcard out_svg/*.svg)
-	@echo "Updating PNG files..."
-	@for file in $?;\
-	do\
-		name=$$(basename -s .svg $$file);\
-		inkscape -z -b white -d 1200 -e out_png/"$$name".png "$$file" >/dev/null;\
-		echo "$$name";\
-	done
-	touch $@
-
-out_png: out_svg
+out_png: $(wildcard out_svg/*.svg) | out_svg
 	@echo "Creating PNG files..."
 	@mkdir -p out_png
-	@for file in out_svg/*;\
+	@files=$?;\
+	if [ "$$files" = "" ];\
+	then\
+		files=out_svg/*;\
+	fi;\
+	for file in $$files;\
 	do\
 		name=$$(basename -s .svg $$file);\
 		inkscape -z -b white -d 1200 -e out_png/"$$name".png "$$file" >/dev/null;\
 	done
+	@touch out_png
 
 out_svg: pre_list
 	@echo "Creating SVG files..."
