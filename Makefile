@@ -30,7 +30,7 @@ out_png: $(wildcard out_svg/*.svg) | out_svg
 	done
 	@touch out_png
 
-out_svg: pre_list
+out_svg: pre_list media/white_standard.svg media/black_standard.svg media/black_pick2.svg media/black_pick3.svg
 	@echo "Creating SVG files..."
 	@mkdir -p out_svg
 	@gawk -v out_dir="out_svg" -f svg.awk pre_list
