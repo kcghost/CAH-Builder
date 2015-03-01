@@ -41,11 +41,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="11.360118"
-     inkscape:cy="190.82816"
+     inkscape:zoom="2.8"
+     inkscape:cx="49.8469"
+     inkscape:cy="167.03744"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="false"
      units="mm"
      inkscape:window-width="1920"
@@ -75,7 +75,7 @@
      style="display:inline">
     <path
        d="m 0,333 244.80709,0 0,-333 L 0,0 0,333 z"
-       style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="path3087"
        inkscape:connector-curvature="0" />
   </g>
@@ -85,7 +85,7 @@
      id="layer1"
      transform="translate(0,-719.36199)"
      style="display:inline">
-      <text
+    <text
        xml:space="preserve"
        style="font-size:45px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:89.99999762%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L Bold"
        x="34.39307"

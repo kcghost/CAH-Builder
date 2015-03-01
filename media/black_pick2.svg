@@ -37,7 +37,7 @@
        clipPathUnits="userSpaceOnUse"
        id="clipPath4917">
       <rect
-         style="fill:#ffffff;fill-opacity:1;stroke:#231f20;stroke-width:0.80000001;stroke-opacity:1"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.80000001;stroke-opacity:1"
          id="rect4919"
          width="51.019554"
          height="37.96804"
@@ -57,13 +57,13 @@
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
+     bordercolor="#000000"
+     borderopacity="1"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="175.97503"
-     inkscape:cy="168.2125"
+     inkscape:zoom="2.8"
+     inkscape:cx="113.19419"
+     inkscape:cy="106.70904"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -96,7 +96,7 @@
      sodipodi:insensitive="true">
     <path
        d="m 0,333 244.80709,0 0,-333 L 0,0 0,333 z"
-       style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="path3087"
        inkscape:connector-curvature="0" />
   </g>
@@ -143,7 +143,7 @@
       <path
          inkscape:connector-curvature="0"
          d="M 0,0 -9.542,-2.917 -12.459,6.625 -2.917,9.542 0,0 z"
-         style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          id="path3667" />
     </g>
     <g
@@ -163,7 +163,7 @@
     <path
        inkscape:connector-curvature="0"
        d="m 54.489197,1013.7464 -12.871251,0 0,-12.8712 12.871251,0 0,12.8712 z m -12.505001,-0.3675 12.136251,0 0,-12.1362 -12.136251,0 0,12.1362 z"
-       style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="path3675" />
     <g
        id="g3677"
@@ -180,7 +180,7 @@
       <path
          inkscape:connector-curvature="0"
          d="M 0,0 -9.823,3.003 -6.82,12.826 3.003,9.823 0,0 z m -9.456,3.198 9.261,-2.831 2.832,9.261 -9.262,2.831 -2.831,-9.261 z"
-         style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
          id="path3683" />
     </g>
     <g
@@ -208,7 +208,7 @@
         <path
            inkscape:connector-curvature="0"
            id="path3635"
-           style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
            d="M 0,0 C 0.139,0.446 0.347,0.836 0.624,1.17 0.901,1.504 1.25,1.764 1.671,1.95 2.091,2.136 2.574,2.229 3.12,2.229 3.536,2.229 3.932,2.164 4.31,2.034 4.686,1.904 5.018,1.718 5.304,1.476 5.59,1.233 5.818,0.934 5.986,0.578 6.155,0.223 6.24,-0.175 6.24,-0.617 6.24,-1.077 6.166,-1.471 6.019,-1.8 5.872,-2.13 5.677,-2.422 5.434,-2.678 5.191,-2.934 4.916,-3.166 4.608,-3.374 4.301,-3.581 3.991,-3.787 3.679,-3.991 3.367,-4.195 3.064,-4.414 2.769,-4.648 2.474,-4.882 2.214,-5.154 1.989,-5.466 l 4.303,0 0,-1.586 -6.682,0 c 0,0.528 0.076,0.987 0.227,1.378 0.152,0.39 0.358,0.738 0.618,1.046 0.26,0.308 0.566,0.592 0.916,0.852 0.352,0.26 0.722,0.524 1.112,0.792 0.199,0.139 0.412,0.28 0.637,0.423 0.225,0.143 0.431,0.301 0.617,0.475 0.187,0.173 0.343,0.368 0.469,0.584 0.125,0.217 0.188,0.464 0.188,0.742 0,0.442 -0.128,0.786 -0.384,1.033 C 3.755,0.52 3.428,0.643 3.029,0.643 2.76,0.643 2.533,0.581 2.346,0.455 2.16,0.329 2.011,0.165 1.898,-0.039 1.785,-0.243 1.705,-0.468 1.658,-0.715 1.61,-0.962 1.586,-1.207 1.586,-1.45 l -1.768,0 C -0.199,-0.93 -0.139,-0.446 0,0" />
       </g>
     </g>
