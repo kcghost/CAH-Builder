@@ -37,15 +37,8 @@ BEGIN {
 	ORS = "\n";
 }
 
-NR != 1 && preview {
-	print "";
-}
-
 {
 	#defaults
-	if(!out_file) {
-		out_file = "pre_list"
-	}
 	if(!debug) {
 		debug = "";
 	}
@@ -53,7 +46,7 @@ NR != 1 && preview {
 		exec = "true";
 	}
 	if(!preview) {
-		preview = "true";
+		preview = "";
 	}
 
 	#width of additional underscore to existing 10 underscores
@@ -100,7 +93,7 @@ NR != 1 && preview {
 			if(line_width >= max_line_width) {
 				#start a new line
 				if(preview) {
-					print line;
+					print line >preview;
 				}
 				line = "";
 				continue;
@@ -124,7 +117,7 @@ NR != 1 && preview {
 
 				if(preview) {
 					line = line word;
-					print line;
+					print line >preview;
 				}
 				#start a new line
 				line = "";
@@ -136,12 +129,12 @@ NR != 1 && preview {
 			char_index = char_index + progress;
 			#if last line
 			if(preview && char_index >= length(str)) {
-				print line;
+				print line >preview;
 			}
 		}
 
 		if(preview && str == "") {
-			print "\\n";
+			print "\\n" >preview;
 		}
 
 		if(i == 1) {
@@ -150,5 +143,5 @@ NR != 1 && preview {
 			total_str = total_str "\\n" str;
 		}
 	}
-	print total_str >out_file;
+	print total_str;
 }

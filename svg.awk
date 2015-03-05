@@ -16,24 +16,20 @@
 # along with CAH Builder.  If not, see <http://www.gnu.org/licenses/>.
 
 @include "util.awk"
+
 BEGIN {
 	FS= "\\\\n";
 }
+
 {
 	#defaults
-	if(!out_dir) {
-		out_dir = "out_svg";
-	}
 	if(!debug) {
 		debug = "";
 	}
 	if(!exec) {
 		exec = "true";
 	}
-
-	underscore_width = 0.111197919;
-	max_line_width = 2.16666666667;
-	min_underscores = 10;
+	file = "";
 
 	quotes_strip = $$0;
 	gsub(/"[^"]*"/,"",quotes_strip);
@@ -57,14 +53,14 @@ BEGIN {
 
 		#print count;
 		if(count == 2) {
-			run("cp media/black_pick2.svg temp.svg");
+			file = "media/black_pick2.svg";
 		} else if(count == 3) {
-			run("cp media/black_pick3.svg temp.svg");
+			file = "media/black_pick3.svg";
 		} else {
-			run("cp media/black_standard.svg temp.svg");
+			file = "media/black_standard.svg";
 		}
 	} else {
-		run("cp media/white_standard.svg temp.svg");
+		file = "media/white_standard.svg";
 	}
 
 	for(i=1;i<=NF;i++) {
@@ -72,9 +68,6 @@ BEGIN {
 
 		#escape quotes for command line
 		gsub(/"/,"\\\"",str);
-		run("xmlstarlet -q ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v '" str "' temp.svg 2>/dev/null > temp_pipe.svg");
-		run("cat temp_pipe.svg > temp.svg");
-		run("rm temp_pipe.svg");
+		run("cat " file " | xmlstarlet -q ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v '" str "' 2>/dev/null");
 	}
-	run("mv temp.svg " out_dir "/" NR ".svg");
 }
