@@ -15,15 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with CAH Builder.  If not, see <http://www.gnu.org/licenses/>.
 
-LINES      := $(shell cat -n media/list | cut -f1 | xargs)
-BACKS      := white_back black_back
-FACES      := $(LINES) $(BACKS)
-TXT_FILES  := $(patsubst %,txt/%,$(LINES))
-SVG_BACKS  := $(patsubst %,svg/%.svg,$(BACKS))
-MEDIA_BACKS  := $(patsubst %,media/%.svg,$(BACKS))
-SVG_FILES  := $(patsubst %,svg/%.svg,$(FACES))
-PNG_FILES  := $(patsubst %,png/%.png,$(FACES))
-TIFF_FILES := $(patsubst %,tiff/%.tiff,$(FACES))
+LINES       := $(shell cat -n media/list | cut -f1 | xargs)
+BACKS       := white_back black_back
+FACES       := $(LINES) $(BACKS)
+TXT_FILES   := $(patsubst %,txt/%,$(LINES))
+WRAP_FILES  := $(patsubst %,wrap/%,$(LINES))
+SVG_BACKS   := $(patsubst %,svg/%.svg,$(BACKS))
+MEDIA_BACKS := $(patsubst %,media/%.svg,$(BACKS))
+SVG_FILES   := $(patsubst %,svg/%.svg,$(FACES))
+PNG_FILES   := $(patsubst %,png/%.png,$(FACES))
+TIFF_FILES  := $(patsubst %,tiff/%.tiff,$(FACES))
 
 .PHONY: all clean strip_svg unwrap
 
@@ -57,13 +58,21 @@ svg/%.svg: txt/% media/white_standard.svg media/black_standard.svg media/black_p
 	@cat $< | gawk -f svg.awk > $@
 	@echo "Created $@."
 
+wrap_list: $(WRAP_FILES)
+	@echo "Creating $@..."
+	@gawk 'NR!=1&&FNR==1{print ""}{print}' wrap/* > wrap_list
+	@echo "Created $@."
+
 txt: $(TXT_FILES)
 
-txt/%: media/list
+# Creates preprocessed text by doing magical things with single underscores and quotes and things
+# Also creates a file wrapped version that is a text preview in the wrapped (pdf_list) format. Not needed for the images.
+txt/% wrap/%: media/list
 	@mkdir -p txt
-	@echo "Creating $@..."
-	@head -$* media/list | tail -1 | gawk -f preprocess.awk > $@
-	@echo "Created $@."
+	@mkdir -p wrap
+	@echo "Creating txt/$*,wrap/$*..."
+	@head -$* media/list | tail -1 | gawk -v preview="wrap/$*" -f preprocess.awk > txt/$*
+	@echo "Created txt/$*,wrap/$*."
 
 # Re-export inkscape svgs in media to plain svgs
 strip_svg: media/white_standard.svg media/black_standard.svg media/black_pick2.svg media/black_pick3.svg
@@ -77,6 +86,7 @@ unwrap: media/pdf_list
 	@gawk -f unwrap.awk media/pdf_list > media/list
 
 clean:
+	@rm -fR wrap
 	@rm -fR txt
 	@rm -fR svg
 	@rm -fR png
