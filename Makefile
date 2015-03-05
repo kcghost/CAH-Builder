@@ -17,7 +17,7 @@
 
 PNGS := $(patsubst out_svg/%.svg,out_png/%.png,$(wildcard out_svg/*.svg))
 
-.PHONY: all clean unwrap
+.PHONY: all clean strip_svg unwrap
 
 all: pre_list out_svg $(PNGS)
 
@@ -40,6 +40,13 @@ out_svg: pre_list media/white_standard.svg media/black_standard.svg media/black_
 pre_list: media/list
 	@echo "Preprocessing list..."
 	@gawk -v preview="true" -v out_file="pre_list" -f preprocess.awk media/list > wrap_list
+
+# Re-export inkscape svgs in media to plain svgs
+strip_svg: media/white_standard.svg media/black_standard.svg media/black_pick2.svg media/black_pick3.svg
+	@inkscape -l media/white_standard.svg media/white_standard.svg
+	@inkscape -l media/black_standard.svg media/black_standard.svg
+	@inkscape -l media/black_pick2.svg media/black_pick2.svg
+	@inkscape -l media/black_pick3.svg media/black_pick3.svg
 
 # Wrapped format should not be used normally. list contains more useful information (forced newlines) than pdf_list
 unwrap: media/pdf_list
