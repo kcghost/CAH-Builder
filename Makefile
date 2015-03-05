@@ -15,24 +15,29 @@
 # You should have received a copy of the GNU General Public License
 # along with CAH Builder.  If not, see <http://www.gnu.org/licenses/>.
 
-PNGS := $(patsubst out_svg/%.svg,out_png/%.png,$(wildcard out_svg/*.svg))
+TIFFS := $(patsubst svg/%.svg,out/%.tiff,$(wildcard svg/*.svg))
 
 .PHONY: all clean strip_svg unwrap
 
-all: pre_list out_svg $(PNGS)
+all: pre_list svg $(TIFFS)
 
-out_png/%.png: out_svg/%.svg
-	@echo "Creating $@"
-	@mkdir -p out_png
-	@inkscape -z -b white -d 1200 -e $@ $< >/dev/null
+out/%.tiff: svg/%.svg
+	@mkdir -p out
+	@echo "Creating $@..."
+	@inkscape -z -b white -d 1200 -e out/$*.png $< >/dev/null
+#	@convert out/$*.png -set colorspace RGB -profile HPIndigoGlossExp05.icc $@
+	@convert out/$*.png -set colorspace RGB -colorspace CMYK $@
+#	@rm -f out/$*.png
+	@echo "Created $@."
 
-out_svg: pre_list media/white_standard.svg media/black_standard.svg media/black_pick2.svg media/black_pick3.svg
+svg: pre_list media/white_standard.svg media/black_standard.svg media/black_pick2.svg media/black_pick3.svg media/white_back.svg media/black_back.svg
 	@echo "Creating SVG files..."
-	@mkdir -p out_svg
-	@gawk -v out_dir="out_svg" -f svg.awk pre_list
-	@cp media/white_back.svg out_svg/
-	@cp media/black_back.svg out_svg/
-# Need recursive make since PNGS var will need to be updated at this point
+	@mkdir -p svg
+	@gawk -v out_dir="svg" -f svg.awk pre_list
+	@cp media/white_back.svg svg/
+	@cp media/black_back.svg svg/
+	@echo "Created SVG files."
+# Need recursive make since TIFFS var will need to be updated at this point
 	@$(MAKE) all --no-print-directory
 
 # Creates pre_list by doing magical things with single underscores and quotes and things
@@ -40,6 +45,7 @@ out_svg: pre_list media/white_standard.svg media/black_standard.svg media/black_
 pre_list: media/list
 	@echo "Preprocessing list..."
 	@gawk -v preview="true" -v out_file="pre_list" -f preprocess.awk media/list > wrap_list
+	@echo "List preprocessed."
 
 # Re-export inkscape svgs in media to plain svgs
 strip_svg: media/white_standard.svg media/black_standard.svg media/black_pick2.svg media/black_pick3.svg
@@ -53,7 +59,7 @@ unwrap: media/pdf_list
 	@gawk -f unwrap.awk media/pdf_list > media/list
 
 clean:
-	@rm -fR out_png
-	@rm -fR out_svg
+	@rm -fR out
+	@rm -fR svg
 	@rm -f pre_list
 	@rm -f wrap_list
