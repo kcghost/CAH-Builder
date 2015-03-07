@@ -60,7 +60,7 @@ svg/%.svg: txt/% media/white_standard.svg media/black_standard.svg media/black_p
 
 wrap_list: $(WRAP_FILES)
 	@echo "Creating $@..."
-	@gawk 'NR!=1&&FNR==1{print ""}{print}' wrap/* > wrap_list
+	@gawk 'NR!=1&&FNR==1{print ""}{print}' $(WRAP_FILES) > wrap_list
 	@echo "Created $@."
 
 txt: $(TXT_FILES)
