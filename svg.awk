@@ -63,11 +63,14 @@ BEGIN {
 		file = "media/white_standard.svg";
 	}
 
+	runstr = "cat " file " ";
 	for(i=1;i<=NF;i++) {
 		str = $i;
 
 		#escape quotes for command line
 		gsub(/"/,"\\\"",str);
-		run("cat " file " | xmlstarlet -q ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v '" str "' 2>/dev/null");
+		runstr = runstr " | xmlstarlet -q ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v '" str "'";
 	}
+	runstr = runstr " 2>/dev/null";
+	run(runstr);
 }
