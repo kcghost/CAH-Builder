@@ -16,14 +16,11 @@
 # along with CAH Builder.  If not, see <http://www.gnu.org/licenses/>.
 
 LINES       := $(shell cat -n media/list | cut -f1 | xargs)
-BACKS       := white_back black_back
-FACES       := $(LINES) $(BACKS)
+FACES       := $(LINES) white_back black_back
 TMP_FILES   := $(patsubst %,tmp/%,$(LINES))
 TXT_FILES   := $(patsubst %,txt/%,$(LINES))
 PRE_FILES   := $(patsubst %,pre/%,$(LINES))
 WRAP_FILES  := $(patsubst %,wrap/%,$(LINES))
-SVG_BACKS   := $(patsubst %,svg/%.svg,$(BACKS))
-MEDIA_BACKS := $(patsubst %,media/%.svg,$(BACKS))
 SVG_FILES   := $(patsubst %,svg/%.svg,$(FACES))
 PNG_FILES   := $(patsubst %,png/%.png,$(FACES))
 TIFF_FILES  := $(patsubst %,tiff/%.tiff,$(FACES))
@@ -56,7 +53,7 @@ png/%.png: svg/%.svg
 
 svg: $(SVG_FILES)
 
-$(SVG_BACKS): $(MEDIA_BACKS)
+svg/%_back.svg: media/%_back.svg
 	@mkdir -p svg
 	@cp $< $@
 	@echo "Copied $@."
