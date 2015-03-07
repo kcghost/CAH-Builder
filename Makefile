@@ -18,13 +18,22 @@
 LINES       := $(shell cat -n media/list | cut -f1 | xargs)
 BACKS       := white_back black_back
 FACES       := $(LINES) $(BACKS)
+TMP_FILES   := $(patsubst %,tmp/%,$(LINES))
 TXT_FILES   := $(patsubst %,txt/%,$(LINES))
+PRE_FILES   := $(patsubst %,pre/%,$(LINES))
 WRAP_FILES  := $(patsubst %,wrap/%,$(LINES))
 SVG_BACKS   := $(patsubst %,svg/%.svg,$(BACKS))
 MEDIA_BACKS := $(patsubst %,media/%.svg,$(BACKS))
 SVG_FILES   := $(patsubst %,svg/%.svg,$(FACES))
 PNG_FILES   := $(patsubst %,png/%.png,$(FACES))
 TIFF_FILES  := $(patsubst %,tiff/%.tiff,$(FACES))
+
+# Check updates to TXT_FILES on every run.
+# They depend on the lines of media/list, but using media/list directly as a dependency 
+# would cause make to rebuild all files when a single line of media/list has changed.
+# need to update the modification date of ONLY the TXT_FILES whose corresponding
+# lines in media/list have changed.
+$(shell mkdir -p tmp; gawk '{ print > "tmp/" NR }' media/list; rsync -cr tmp/ txt/)
 
 .PHONY: all clean strip_svg unwrap
 
@@ -52,7 +61,7 @@ $(SVG_BACKS): $(MEDIA_BACKS)
 	@cp $< $@
 	@echo "Copied $@."
 
-svg/%.svg: txt/% media/white_standard.svg media/black_standard.svg media/black_pick2.svg media/black_pick3.svg
+svg/%.svg: pre/% media/white_standard.svg media/black_standard.svg media/black_pick2.svg media/black_pick3.svg
 	@mkdir -p svg
 	@echo "Creating $@..."
 	@cat $< | gawk -f svg.awk > $@
@@ -63,16 +72,16 @@ wrap_list: $(WRAP_FILES)
 	@gawk 'NR!=1&&FNR==1{print ""}{print}' $(WRAP_FILES) > wrap_list
 	@echo "Created $@."
 
-txt: $(TXT_FILES)
+pre: $(PRE_FILES)
 
 # Creates preprocessed text by doing magical things with single underscores and quotes and things
 # Also creates a file wrapped version that is a text preview in the wrapped (pdf_list) format. Not needed for the images.
-txt/% wrap/%: media/list
-	@mkdir -p txt
+pre/% wrap/%: txt/%
+	@mkdir -p pre
 	@mkdir -p wrap
-	@echo "Creating txt/$*,wrap/$*..."
-	@head -$* media/list | tail -1 | gawk -v preview="wrap/$*" -f preprocess.awk > txt/$*
-	@echo "Created txt/$*,wrap/$*."
+	@echo "Creating pre/$*,wrap/$*..."
+	@gawk -v preview="wrap/$*" -f preprocess.awk < $< > pre/$*
+	@echo "Created pre/$*,wrap/$*."
 
 # Re-export inkscape svgs in media to plain svgs
 strip_svg: media/white_standard.svg media/black_standard.svg media/black_pick2.svg media/black_pick3.svg
@@ -86,8 +95,10 @@ unwrap: media/pdf_list
 	@gawk -f unwrap.awk media/pdf_list > media/list
 
 clean:
-	@rm -fR wrap
+	@rm -fR tmp
 	@rm -fR txt
+	@rm -fR wrap
+	@rm -fR pre
 	@rm -fR svg
 	@rm -fR png
 	@rm -fR tiff
