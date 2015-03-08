@@ -15,15 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with CAH Builder.  If not, see <http://www.gnu.org/licenses/>.
 
-LINES       := $(shell cat -n media/list | cut -f1 | xargs)
-FACES       := $(LINES) white_back black_back
-TMP_FILES   := $(patsubst %,tmp/%,$(LINES))
-TXT_FILES   := $(patsubst %,txt/%,$(LINES))
-PRE_FILES   := $(patsubst %,pre/%,$(LINES))
-WRAP_FILES  := $(patsubst %,wrap/%,$(LINES))
-SVG_FILES   := $(patsubst %,svg/%.svg,$(FACES))
-PNG_FILES   := $(patsubst %,png/%.png,$(FACES))
-TIFF_FILES  := $(patsubst %,tiff/%.tiff,$(FACES))
+LINES              := $(shell cat -n media/list | cut -f1 | xargs)
+FACES              := $(LINES) white_back black_back
+TMP_FILES          := $(patsubst %,tmp/%,$(LINES))
+TXT_FILES          := $(patsubst %,txt/%,$(LINES))
+PRE_FILES          := $(patsubst %,pre/%,$(LINES))
+WRAP_FILES         := $(patsubst %,wrap/%,$(LINES))
+SVG_FILES          := $(patsubst %,svg/%.svg,$(FACES))
+PNG_FILES          := $(patsubst %,png/%.png,$(FACES))
+TIFF_FILES         := $(patsubst %,tiff/%.tiff,$(FACES))
+TIFF_FILES_PATTERN := $(patsubst %,\%iff/%.tiff,$(FACES))
 
 # Check updates to TXT_FILES on every run.
 # They depend on the lines of media/list, but using media/list directly as a dependency 
@@ -36,12 +37,16 @@ $(shell mkdir -p tmp; gawk '{ print > "tmp/" NR }' media/list; rsync -cr tmp/ tx
 
 tiff: $(TIFF_FILES)
 
-tiff/%.tiff: png/%.png
+# Using a dummy pattern list to force make into considering one invocation of this
+# rule as a generator for all of the target files. Otherwise 'make -j' will invoke
+# the rule multiple times
+$(TIFF_FILES_PATTERN): $(PNG_FILES)
 	@mkdir -p tiff
-	@echo "Creating $@..."
+	@echo "Creating tiff files..."
 #	@convert out/$*.png -set colorspace RGB -profile HPIndigoGlossExp05.icc $@
-	@convert $< -set colorspace RGB -colorspace CMYK $@
-	@echo "Created $@."
+#	@convert $< -set colorspace RGB -colorspace CMYK $@
+	@mogrify -path tiff -format tiff -set colorspace RGB -colorspace CMYK $?
+	@echo "Created tiff files."
 
 png: $(PNG_FILES)
 
@@ -71,6 +76,7 @@ wrap_list: $(WRAP_FILES)
 
 pre: $(PRE_FILES)
 
+# Note GNU make treats pattern rule multiple targets differently thatn explicit ones. Here make knows that a single invocation creates both targets.
 # Creates preprocessed text by doing magical things with single underscores and quotes and things
 # Also creates a file wrapped version that is a text preview in the wrapped (pdf_list) format. Not needed for the images.
 pre/% wrap/%: txt/%
