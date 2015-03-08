@@ -48,7 +48,7 @@ png: $(PNG_FILES)
 png/%.png: svg/%.svg
 	@mkdir -p png
 	@echo "Creating $@..."
-	@inkscape -z -b white -d 1200 -e $@ $< >/dev/null
+	@inkscape -z -b white -d 2438 -e $@ $< >/dev/null
 	@echo "Created $@."
 
 svg: $(SVG_FILES)
