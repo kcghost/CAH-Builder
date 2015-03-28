@@ -1,28 +1,35 @@
 CAH Builder
 ===========
 This project helps you to create full size (63x88mm) custom generated [Cards Against Humanity](http://cardsagainsthumanity.com/) cards from plain text.
-The resulting images ~~will~~ should work at [Make Playing Cards](http://www.makeplayingcards.com/). 63 x 88mm, 310 GSM linen finish cards are recommended.
+The resulting images should work at [Make Playing Cards](http://www.makeplayingcards.com/). 63 x 88mm, 310 GSM linen finish cards are recommended.
 
 Project Status
 --------------
 This project is still a work in progress. The following issues are yet to be addressed:
 
-* The card images have not yet been tested at [Make Playing Cards](http://www.makeplayingcards.com/).
+* The card images have been tested at [Make Playing Cards](http://www.makeplayingcards.com/). They came out well, but I did 
+have [some nitpicks](http://kcghost.github.io/projects/2015/02/28/cah-cards.html) which have since been addressed in 0c5223897f587016331eaab0efb7e9081d83ac8a and 270e5fb7ff23eea7f7943f31c9823b647120f4a3. The changes have yet to be tested.
 * The generated card images may not match the cards from CAH in all cases (need changes to whitespace length determination, forced newlines)
 
 Requirements
 ------------
 You will need the following softwares to run CAH Builder:
 
-* make
-* gawk
-* inkscape
-* xmlstarlet
+
+* Inkscape
+* XMLStarlet
+* ImageMagick
+* GNU Make
+* GNU Awk
+* rsync
+* cat
+* cut
+* xargs
 * 'Nimbus Sans L Bold' font (very close to the Helvetica font used on the CAH cards)
 
 On Ubuntu just run:
 ```
-sudo apt-get install make gawk xmlstarlet inkscape
+sudo apt-get install make gawk xmlstarlet inkscape imagemagick
 ```
 
 Usage
@@ -37,21 +44,29 @@ Don't worry about white vs. black cards, or if it is a Pick 2 or a Pick 3, etc. 
 
 When you are satisfied with your list, run:
 ```
-make
+make -j10
 ```
+or similar. See the [documentation for make's parallel functionality](https://www.gnu.org/software/make/manual/html_node/Parallel.html). `make` will work, but will execute the conversions sequentially and will take a very long time. All of the steps are made to be parallelizable to cut down on time. On my system, `make -j10` takes around 50 minutes, while `make` runs for 100 minutes (full base game, 550 cards).
 
-1200 DPI PNG images will be created under out_png. The SVG files will be available under out_svg.
-The preprocessed list is available as pre_list. A wrapped text preview is available as wrap_list.
+2438 DPI TIFF images will be created under tiff, named by their line number. In addition, the white and black back images will be available.
+The project also generates SVG files, PNG files, preprocessed text files, wrapped text preview files, and unprocessed text files in corresponding directories.
+You may use `make wrap_list` to generate the wrapped text preview into a single file called wrap_list.
+
+The conversion steps go from media/list → txt/(line) → pre/(line) → svg/(line).svg → png/(line).png → tiff/(line).tiff.
+The source for each step may be modified, and `make` will re-create only what is necessary for the rest of the conversion.
+
+For example, you may decide to edit svg/3.svg in Inkscape. Using `make` afterward will regenerate png/2.png and tiff/3.tiff.
+Don't be afraid to edit media/list, if you edit a single line in media/list only the corresponding files for that line will be regenerated.
 
 Underscore Rules
 ----------------
 Subject to change. The current rules do not exactly match those used for actual cards. They mostly do.
 
-A single under score surrounded by whitespace ` _ ` will attempt to extend toward the end of the line. If it is not long enough, at least 10 underscores `__________`, then it will take up the entirety of the next line.
+A single underscore surrounded by whitespace ` _ ` will attempt to extend toward the end of the line. If it is not long enough, at least 10 underscores `__________`, then it will take up the entirety of the next line.
 
 If the underscore is part of a word, such as `_-tastic!` or includes punctuation: `_.` the whole token will be extended. If there are not enough underscores the word will take up the entirety of the next line.
 
-You can specify any underscore length you want (besides 1) by using multiple underscores.
+You can override these rules and specify any underscore length you want (besides 1) by using multiple underscores. You may also edit the files in txt or svg to correct formatting, and re-invoke `make`.
 
 Grammar Rules
 -------------
