@@ -46,9 +46,9 @@ When you are satisfied with your list, run:
 ```
 make -j10
 ```
-or similar. See the [documentation for make's parallel functionality](https://www.gnu.org/software/make/manual/html_node/Parallel.html). `make` will work, but will execute the conversions sequentially and will take a very long time. All of the steps are made to be parallelizable to cut down on time. On my system, `make -j10` takes around 50 minutes, while `make` runs for 100 minutes (full base game, 550 cards).
+or similar. See the [documentation for make's parallel functionality](https://www.gnu.org/software/make/manual/html_node/Parallel.html). `make` will work, but will execute the conversions sequentially and will take a very long time. All of the steps are made to be parallelizable to cut down on time. On my system, `make -j10` takes around 5 minutes, while `make` runs for 20 minutes (full base game, 550 cards).
 
-2438 DPI TIFF images will be created under tiff, named by their line number. In addition, the white and black back images will be available.
+800 DPI TIFF images will be created under tiff, named by their line number. In addition, the white and black back images will be available.
 The project also generates SVG files, PNG files, preprocessed text files, wrapped text preview files, and unprocessed text files in corresponding directories.
 You may use `make wrap_list` to generate the wrapped text preview into a single file called wrap_list.
 
