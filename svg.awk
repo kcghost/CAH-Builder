@@ -33,12 +33,15 @@ BEGIN {
 
 	quotes_strip = $$0;
 	gsub(/"[^"]*"/,"",quotes_strip);
-	#its a black card if:
-	#it contains an interrogative word and ends with a question mark
-	#it contains one or more _'s
-	#its the 'Make a haiku' card. I was considering detecting the grammar of a 'command' for black,
-	#but I still wouldn't have a way of knowing pick 2, pick 3 etc. So I cheated.
-	if(match(tolower(quotes_strip),/(who|what|when|where|why|how|which|whatever|whom|whose|wherewith|whither|whence).+?\?$/) || match($$0,/[_]/) || match(quotes_strip,/haiku/)) {
+
+	# English interrogative words: https://www.hopstudios.com/nep/unvarnished/item/list_of_english_question_words
+	# Spanish interrogative words: http://www.spanishdict.com/topics/show/48
+	# Its a black card if:
+	# It contains an interrogative word base (e.g. 'whom' will match because of 'who') in either english or spanish and ends with a question mark
+	# It contains one or more _'s
+	# Its the 'Make a haiku' card. I was considering detecting the grammar of a 'command' for black,
+	# But I still wouldn't have a way of knowing pick 2, pick 3 etc. So I cheated.
+	if(match(tolower(quotes_strip),/(who|what|when|where|why|how|which|whither|qué|cómo|dónde|quién|cuál|cuán).+?\?$/) || match($$0,/[_]/) || match(quotes_strip,/haiku/)) {
 		#count the blanks
 		count=0;
 		str = $$0;
@@ -67,7 +70,7 @@ BEGIN {
 	for(i=1;i<=NF;i++) {
 		str = $i;
 
-		#escape quotes for command line
+		# Escape quotes for command line
 		gsub(/"/,"\\\"",str);
 		runstr = runstr " | xmlstarlet -q ed -s \"//*[@id=\x27textArea\x27]\" --type elem -n flowPara -v '" str "'";
 	}
